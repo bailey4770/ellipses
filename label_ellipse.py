@@ -1,7 +1,8 @@
 import plotly.graph_objects as go
 
-ARROW_SIZE = 1.5
+ARROW_SIZE = 2.5
 ARROW_HEAD = 2
+TEXT_SIZE = 32
 
 
 def add_labels_to_ellipse(fig: go.Figure, a: float, b: float, c: float) -> go.Figure:
@@ -40,7 +41,12 @@ def _label_centre(fig: go.Figure) -> go.Figure:
     )
     _ = fig.add_trace(
         go.Scatter(
-            x=[0], y=[-0.01], mode="text", text=["Centre"], textposition="bottom center"
+            x=[0],
+            y=[-0.01],
+            mode="text",
+            text=["Centre"],
+            textposition="bottom center",
+            textfont={"size": TEXT_SIZE},
         )
     )
 
@@ -72,7 +78,12 @@ def _label_semi_major(fig: go.Figure, a: float) -> go.Figure:
     )
     _ = fig.add_trace(
         go.Scatter(
-            x=[a / 2], y=[0], mode="text", text=["a"], textposition="bottom center"
+            x=[a / 2],
+            y=[0],
+            mode="text",
+            text=["a"],
+            textposition="bottom center",
+            textfont={"size": TEXT_SIZE},
         )
     )
 
@@ -104,7 +115,12 @@ def _label_semi_minor(fig: go.Figure, b: float) -> go.Figure:
     )
     _ = fig.add_trace(
         go.Scatter(
-            x=[-0.01], y=[b / 2], mode="text", text=["b"], textposition="middle left"
+            x=[-0.01],
+            y=[b / 2],
+            mode="text",
+            text=["b"],
+            textposition="middle left",
+            textfont={"size": TEXT_SIZE},
         )
     )
 
@@ -152,7 +168,12 @@ def _label_foci(fig: go.Figure, c: float) -> go.Figure:
     )
     _ = fig.add_trace(
         go.Scatter(
-            x=[0], y=[-0.5], mode="text", text=["Foci"], textposition="bottom center"
+            x=[0],
+            y=[-0.5],
+            mode="text",
+            text=["Foci"],
+            textposition="bottom center",
+            textfont={"size": TEXT_SIZE},
         )
     )
 
@@ -184,7 +205,12 @@ def _label_offset(fig: go.Figure, c: float) -> go.Figure:
     )
     _ = fig.add_trace(
         go.Scatter(
-            x=[-(c / 2)], y=[0], mode="text", text=["c"], textposition="bottom center"
+            x=[-(c / 2)],
+            y=[0],
+            mode="text",
+            text=["c"],
+            textposition="bottom center",
+            textfont={"size": TEXT_SIZE},
         )
     )
 
