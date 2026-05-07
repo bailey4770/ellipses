@@ -84,7 +84,7 @@ def animate_orbit(fig: go.Figure, x: np.ndarray, y: np.ndarray, c: float) -> go.
                         "args": [
                             None,
                             {
-                                "frame": {"duration": 0},
+                                "frame": {"duration": 30},
                                 "transition": {"duration": 0},
                                 "fromcurrent": True,
                             },
