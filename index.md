@@ -1,5 +1,3 @@
-# Elliptical Orbits and Eclipses for Visual Learners (like me)
-
 ## What is an ellipse?
 
 **Technical definiton of ellipse**: for any point on the ellipse, the sum of
@@ -14,7 +12,7 @@ components.
 - Semi-minor axis, $b$
 - Distance from centre to focus, $c$
 
-The distance from centre to focus, `c` is geometrically related to the
+The distance from centre to focus, $c$ is geometrically related to the
 semi-major and -minor axes by the equation:
 
 $$
