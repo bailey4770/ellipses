@@ -96,3 +96,5 @@ the planet's real position on the ellipitcal orbit at time $t$.
 ## Computing eccentric anomaly from mean anomaly
 
 # TODO
+
+[Orbital animation](./img/animation.html)

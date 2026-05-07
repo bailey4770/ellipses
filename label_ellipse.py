@@ -45,6 +45,61 @@ def add_curve(
     return fig
 
 
+def animate_orbit(fig: go.Figure, x: np.ndarray, y: np.ndarray, c: float) -> go.Figure:
+    fig = _add_star(fig, c)
+
+    _ = fig.add_trace(
+        go.Scatter(
+            x=[x[0]],
+            y=[y[0]],
+            mode="markers",
+            marker={"size": PLANET_SIZE, "color": "black"},
+        )
+    )
+
+    frames = []
+    for _ in range(10):
+        for i in range(len(x)):
+            frame = go.Frame(
+                data=[
+                    go.Scatter(
+                        x=[x[i]],
+                        y=[y[i]],
+                        mode="markers",
+                        marker={"size": PLANET_SIZE, "color": "black"},
+                    )
+                ],
+                traces=[3],
+            )
+            frames.append(frame)
+
+    _ = fig.update_layout(
+        updatemenus=[
+            {
+                "type": "buttons",
+                "buttons": [
+                    {
+                        "label": "Play",
+                        "method": "animate",
+                        "args": [
+                            None,
+                            {
+                                "frame": {"duration": 0},
+                                "transition": {"duration": 0},
+                                "fromcurrent": True,
+                            },
+                        ],
+                    }
+                ],
+            }
+        ]
+    )
+
+    fig.frames = frames
+
+    return fig
+
+
 def draw_anomalies(
     fig: go.Figure,
     a: float,
