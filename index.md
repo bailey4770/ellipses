@@ -60,10 +60,11 @@ intervals in time. This basically means that an object moves faster when its
 closer to its star, and slower when its further away.
 
 In order to accurately animate orbital motion with Kepler's Second Law, we must
-understand elliptical anomalies. Imagine a circle with radius $a$ centred at the
-origin.
+understand elliptical anomalies.
 
-# TODO - add diagram with all three anomalies
+Imagine a circle with radius $a$ centred at the origin.
+
+![Ellipse with hypothetical circle, with eccentric, mean, and true anomaly labelled](./img/labelled_anomalies.png)
 
 ### Mean Anomaly
 
@@ -77,7 +78,7 @@ M(t) = \frac{2 \pi t}{T}
 $$
 
 The mean anomaly $M$ is the angle from the origin between the periapsis and the
-point $M(t)$ on the imaginary orbit for given $t$, when $t=0$ at the periapsis.
+point $F$ on the imaginary orbit for given $t$, when $t=0$ at the periapsis.
 
 ### Eccentric Anomaly
 
