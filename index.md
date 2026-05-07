@@ -33,22 +33,24 @@ eccentricities $0 \leq e < 1$. Where $e=1$, the ellipse is now unbound and
 becomes a parabola, and where $e>1$ the eccentricity is so extreme that we refer
 to the generated curve as a hyperbola.
 
+## Elliptical orbits
+
 Planet's have elliptical orbits around their star, which is found at one of the
 focus points. Technically, both the star and planet have elliptical orbits
 around the system's centre of mass, which is found at the shared focus of every
 elliptical orbit of each object in the system. Understanding this is important
 for understanding other methods for detecting exoplanets, such as the Doppler
-Method. But for our purposes, the stars mass is usually so much greater than the
-plantary mass, and the star's orbit so much smaller in comparison to the
+Method. But for our purposes, the star's mass is usually so much greater than
+the plantary mass, and the star's orbit so much smaller in comparison to the
 planet's orbit, that it is helpful for us to simplify and imagine that the star
 is fixed at the focus point of a planet's elliptical orbit around it.
 
 The point on the orbit where the planet is closest to its star is called the
-periapsis, or when the star is the Sun, it is called the perihelion. The
-opposite point, where it is furthest from its star, is called the apoapsis, or
-when the star is the Sun, it is called the aphelion.
+**periapsis**, or when the star is the Sun, it is called the **perihelion**. The
+opposite point, where it is furthest from its star, is called the **apoapsis**,
+or when the star is the Sun, it is called the **aphelion**.
 
-# TODO add simple star at focus and planet on elliptical orbit diagram and periapsis and apoapsis
+![Static planet on an elliptical orbit](./img/labelled_static_planet.png)
 
 ## Anomalies and Kepler's Second Law
 
