@@ -1,15 +1,19 @@
 # pyright: reportUnknownMemberType=none, reportAny=none
 
 import plotly.graph_objects as go
+from PIL import Image
+import io
 import numpy as np
+from pathlib import Path
 
 ARROW_SIZE = 2.5
 ARROW_HEAD = 2
-TEXT_SIZE = 32
+TEXT_SIZE = 24
+PLANET_POS = 40
 STAR_SIZE = 25
 PLANET_SIZE = 15
 STAR_LABEL_Y_OFFSET = -0.1
-PLANET_LABEL_X_OFFSET = 0.05
+PLANET_LABEL_X_OFFSET = 0.10
 APSE_LABEL_OFFSET = 0.3
 APSE_LABEL_Y = 0.25
 FOCI_LABEL_Y = -0.5
@@ -45,7 +49,7 @@ def add_curve(
     return fig
 
 
-def animate_orbit(fig: go.Figure, x: np.ndarray, y: np.ndarray, c: float) -> go.Figure:
+def animate_orbit(fig: go.Figure, x: np.ndarray, y: np.ndarray, c: float) -> None:
     fig = _add_star(fig, c)
 
     _ = fig.add_trace(
@@ -57,47 +61,22 @@ def animate_orbit(fig: go.Figure, x: np.ndarray, y: np.ndarray, c: float) -> go.
         )
     )
 
+    total_steps = len(x)
     frames = []
-    for _ in range(10):
-        for i in range(len(x)):
-            frame = go.Frame(
-                data=[
-                    go.Scatter(
-                        x=[x[i]],
-                        y=[y[i]],
-                        mode="markers",
-                        marker={"size": PLANET_SIZE, "color": "black"},
-                    )
-                ],
-                traces=[3],
-            )
-            frames.append(frame)
+    for i in range(0, len(x), 5):
+        fig.data[3].x = (x[i],)
+        fig.data[3].y = (y[i],)
+        png = fig.to_image(format="png")
+        frames.append(Image.open(io.BytesIO(png)))
+        print(f"{i / total_steps * 100}% complete")
 
-    _ = fig.update_layout(
-        updatemenus=[
-            {
-                "type": "buttons",
-                "buttons": [
-                    {
-                        "label": "Play",
-                        "method": "animate",
-                        "args": [
-                            None,
-                            {
-                                "frame": {"duration": 30},
-                                "transition": {"duration": 0},
-                                "fromcurrent": True,
-                            },
-                        ],
-                    }
-                ],
-            }
-        ]
+    frames[0].save(
+        "assets/img/elliptical_orbit.gif",
+        save_all=True,
+        append_images=frames[1:],
+        loop=0,
+        duration=30,
     )
-
-    fig.frames = frames
-
-    return fig
 
 
 def draw_anomalies(
@@ -112,8 +91,8 @@ def draw_anomalies(
     y_circle: np.ndarray,
     E: np.ndarray,
     M: np.ndarray,
-    planet_pos: int,
-) -> go.Figure:
+    planet_pos: int = PLANET_POS,
+) -> None:
     """Draws the auxiliary circle with anomaly angle annotations.
 
     Args:
@@ -146,8 +125,7 @@ def draw_anomalies(
         fig, a, c, x_M, y_M, x_ellipse, y_ellipse, x_circle, y_circle, E, M, planet_pos
     )
 
-    _ = fig.update_layout(yaxis=dict(scaleanchor="x", scaleratio=1))
-    return fig
+    fig.write_image(Path("assets/img/labelled_anomalies.png"))
 
 
 def draw_elliptical_orbit_labels(
@@ -156,8 +134,8 @@ def draw_elliptical_orbit_labels(
     a: float,
     x: np.ndarray,
     y: np.ndarray,
-    planet_pos: int,
-) -> go.Figure:
+    planet_pos: int = PLANET_POS,
+) -> None:
     """Adds orbital body markers and apse labels to an elliptical orbit figure.
 
     Annotates the figure with the star at the focus, the planet at its
@@ -178,10 +156,10 @@ def draw_elliptical_orbit_labels(
     fig = _add_static_planet(fig, x[planet_pos], y[planet_pos], "Planet")
     fig = _add_apoapsis_and_periapsis(fig, a)
 
-    return fig
+    fig.write_image(Path("assets/img/labelled_static_planet.png"))
 
 
-def draw_labels_on_ellipse(fig: go.Figure, a: float, b: float, c: float) -> go.Figure:
+def draw_labels_on_ellipse(fig: go.Figure, a: float, b: float, c: float) -> None:
     """Adds geometric labels to an ellipse figure.
 
     Annotates the figure with dimension lines and markers for the
@@ -202,7 +180,7 @@ def draw_labels_on_ellipse(fig: go.Figure, a: float, b: float, c: float) -> go.F
     fig = _label_foci(fig, c)
     fig = _label_offset(fig, c)
 
-    return fig
+    fig.write_image(Path("assets/img/labelled_ellipse.png"))
 
 
 def _add_anomaly_angles(
@@ -228,7 +206,7 @@ def _add_anomaly_angles(
         end_x=x_circle[planet_pos],
         end_y=y_circle[planet_pos],
         limit=E[planet_pos],
-        arc_radius=0.25,
+        arc_radius=0.4,
         label="E",
         x_offset_label=0.08,
         color="green",
@@ -239,9 +217,9 @@ def _add_anomaly_angles(
         end_x=x_M[planet_pos],
         end_y=y_M[planet_pos],
         limit=M[planet_pos],
-        arc_radius=0.6,
+        arc_radius=0.75,
         label="M",
-        x_offset_label=0.4,
+        x_offset_label=0.45,
         color="red",
     )
     fig = _add_anomaly_angle(
@@ -250,7 +228,7 @@ def _add_anomaly_angles(
         end_x=x_ellipse[planet_pos],
         end_y=y_ellipse[planet_pos],
         limit=np.arctan2(y_ellipse[planet_pos], x_ellipse[planet_pos] - c),
-        arc_radius=0.25,
+        arc_radius=0.3,
         label="ν",
         x_offset_label=0.03,
         color="purple",
@@ -458,7 +436,7 @@ def _label_semi_major(fig: go.Figure, a: float) -> go.Figure:
             y=[0],
             mode="text",
             text=["a"],
-            textposition="bottom center",
+            textposition="top center",
             textfont={"size": TEXT_SIZE},
         )
     )
@@ -564,7 +542,7 @@ def _label_offset(fig: go.Figure, c: float) -> go.Figure:
             y=[0],
             mode="text",
             text=["c"],
-            textposition="bottom center",
+            textposition="top center",
             textfont={"size": TEXT_SIZE},
         )
     )

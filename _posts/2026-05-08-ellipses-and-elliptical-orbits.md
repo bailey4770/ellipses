@@ -1,3 +1,5 @@
+# Ellipses and Elliptical Orbits
+
 ## What is an ellipse?
 
 **Technical definiton of ellipse**: for any point on the ellipse, the sum of
@@ -6,7 +8,7 @@ distances to each focus is constant.
 See labelled diagram for an ellipse below for the names of the different
 components.
 
-![Labelled ellipse](./img/labelled_ellipse.png)
+![Labelled ellipse](/ellipses/assets/img/labelled_ellipse.png)
 
 - Semi-major axis, $a$
 - Semi-minor axis, $b$
@@ -48,7 +50,7 @@ The point on the orbit where the planet is closest to its star is called the
 opposite point, where it is furthest from its star, is called the **apoapsis**,
 or when the star is the Sun, it is called the **aphelion**.
 
-![Static planet on an elliptical orbit](./img/labelled_static_planet.png)
+![Static planet on an elliptical orbit](/ellipses/assets/img/labelled_static_planet.png)
 
 ## Anomalies and Kepler's Second Law
 
@@ -62,7 +64,7 @@ understand elliptical anomalies.
 
 Imagine a circle with radius $a$ centred at the origin.
 
-![Ellipse with hypothetical circle, with eccentric, mean, and true anomaly labelled](./img/labelled_anomalies.png)
+![Ellipse with hypothetical circle, with eccentric, mean, and true anomaly labelled](/ellipses/assets/img/labelled_anomalies.png)
 
 ### Mean Anomaly
 
@@ -95,4 +97,4 @@ the planet's real position on the ellipitcal orbit at time $t$.
 
 # TODO
 
-[Orbital animation](./img/animation.html)
+![Elliptical orbit](/ellipses/assets/img/elliptical_orbit.gif)
