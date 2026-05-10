@@ -18,3 +18,5 @@ the origin at the star, with the X-Y planes on the celestial sphere and the +Z
 axis coming towards the observer.
 
 From an observer's perspective, a celestial body
+
+<iframe src="/ellipses/assets/3d_orbit.html" width="100%" height="600px" frameborder="0"></iframe>
