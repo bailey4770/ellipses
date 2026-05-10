@@ -1,5 +1,7 @@
 ---
-title: 1. Ellipses and Elliptical Orbits
+title: 1. Ellipses and elliptical orbits
+excerpt: A brief exploration of elliptical orbits and Kepler's Second Law.
+toc: true
 ---
 
 ## What is an ellipse?
