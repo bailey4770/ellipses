@@ -1,5 +1,5 @@
 ---
-title: 2. Eclipse Basics
+title: Eclipse Basics
 excerpt: TODO
 toc: true
 ---
@@ -7,7 +7,7 @@ toc: true
 ## Geometry of eclipses
 
 Consider a planet of radius $R_P$ and mass $M_P$ orbitting a star of radius
-$R_*$ and mass $M_*$. Let's define the ratio of planet to star radius:
+$R_\*$ and mass $M_*$. Let's define the ratio of planet to star radius:
 
 $$
 k = \frac{R_P}{R_*} \tag{1}

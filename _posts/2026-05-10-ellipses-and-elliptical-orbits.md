@@ -1,5 +1,5 @@
 ---
-title: 1. Ellipses and elliptical orbits
+title: Ellipses and Elliptical Orbits
 excerpt: A brief exploration of elliptical orbits and Kepler's Second Law.
 toc: true
 ---
@@ -28,7 +28,7 @@ $$
 c^2 = a^2 - b^2 \tag{1}
 $$
 
-Here, we can define a new term - the eccentricty $e$ - which is related to $c$
+Here we can define a new term - the eccentricty $e$ - which is related to $c$
 and $a$ by:
 
 $$
@@ -38,7 +38,7 @@ $$
 When $e=0$, then the ellipse is a special case - a circle. Ellipses have
 eccentricities $0 \leq e < 1$. Where $e=1$, the ellipse is now unbound and
 becomes a parabola, and where $e>1$ the eccentricity is so extreme that we refer
-to the generated curve as a hyperbola.
+to the curve as a hyperbola.
 
 ## Elliptical orbits
 
@@ -67,7 +67,7 @@ or when the star is the Sun, it is called the **aphelion**.
 Kepler's Second Law states that a line from an object on an elliptical orbit to
 the star at one of its focal points will sweep out equal areas during equal
 intervals in time. This basically means that an object moves faster when its
-closer to its star, and slower when its further away.
+closer to its star and slower when its further away.
 
 In order to accurately animate orbital motion with Kepler's Second Law, we must
 understand elliptical anomalies.
@@ -139,7 +139,7 @@ of $e$ and $M$. Here, $e = 0.7$ and $M=3$:
   <figcaption>Figure 4: Graph of f(E) for e = 0.7 and M = 3, showing the root to be found by Newton's method.</figcaption>
 </figure>
 
-Then, we take an initial guess. For us, a reasonable first guess is $E_0 = M$.
+Then we take an initial guess. For us, a reasonable first guess is $E_0 = M$.
 Using the below equation, we can refine our guess to find the value of $E$ where
 $f(E) = 0$:
 
