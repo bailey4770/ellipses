@@ -1,6 +1,6 @@
----
-title: Ellipses and Elliptical Orbits
----
+# Ellipses and Elliptical Orbits
+
+# TODO - front matter
 
 ## What is an ellipse?
 
@@ -97,75 +97,6 @@ the planet's real position on the ellipitcal orbit at time $t$.
 
 ## Computing eccentric anomaly from mean anomaly
 
-Kepler found the below equation linking the mean and eccentric anomaly:
-
-$$
-M = E - e sinE
-$$
-
-So to animate our elliptical orbit with Kepler's Second Law, we can solve for
-$E(t)$ to find where the planet should be on the hypotehtical circle, then
-project straight down until we meet the ellipse.
-
-However, there is a problem. The above formula cannot be solved for $E$ in
-closed form. Enter: Newton's iterative method for finding the root of an
-equation.
-
-We can rewrite the above equation to
-
-$$
-f(E) = E - e sinE - M
-$$
-
-which turns the problem into a root finding problem - we can find $E$ from $M$
-where $f(E) = 0$.
-
-Let's visualise this equation graphically. We can graph $f(E)$ for given values
-of $e$ and $M$. Here, $e = 0.7$ and $M=3$:
-
-![f(E) graph](/ellipses/assets/img/f_E.png)
-
-Then, we take an initial guess. For us, a reasonable first guess is $E_0 = M$.
-Using the below equation, we can refine our guess to find the value of $E$ where
-$f(E) = 0$:
-
-$$
-E_{n+1} = E_n - \frac{f(E_n)}{f'(E_n)}
-$$
-
-Let's understand what we're doing here. The numerator, $f(E_n)$, tells us
-whether we're above or below the root, and by how far. The denominator tells us
-the gradient of the curve at this value of $E$. Looking at the curve, we know
-the gradient will be shallow far from the root and steep close to the root. When
-the gradient is shallow, the denominator will be small, so the step from $E_n$
-to $E_{n+1}$ will be large, and vice versa when the gradient is steep.
-
-We can substitute $f(E) = E - e sinE - M$ and $f'(E) = 1 - e cosE$ (knowing that
-the first derivative of $e sinE$ is $e cosE$) to write the equation in terms
-that we can calculate:
-
-$$
-E_{n+1} = E_n - \frac{E_n - e sinE_n - M}{ 1 - e cosE_n}
-$$
-
-For our purposes, only 5 iterations of the above formula will give a value of
-$E$ so that $f(E)$ is extremely close to $0$.
-
-We can then derive cartesian coordinates of the elliptical orbit using the below
-equations:
-
-$$
-x = a cosE
-$$
-
-$$
-y = b sinE
-$$
-
-And drawing these coordinates in discrete time intervals gives the below
-animation, showing Kepler's Second Law in action.
+# TODO
 
 ![Elliptical orbit](/ellipses/assets/img/elliptical_orbit.gif)
-
-The object has an elliptical orbit around the star, moving quickly near the
-periapsis and slowly near the apoapsis.
