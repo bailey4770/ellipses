@@ -29,5 +29,7 @@ def calculate_eccentric_anomaly(M: np.ndarray, e: float) -> np.ndarray:
 
 
 def rotate_ellipse(coords: np.ndarray, i: float) -> np.ndarray:
-    rotation_matrix = [[1, 0, 0], [0, np.cos(i), -np.sin(i)], [0, np.sin(i), np.cos(i)]]
+    rotation_matrix = np.array(
+        [[1, 0, 0], [0, np.cos(i), np.sin(i)], [0, np.sin(i), np.cos(i)]]
+    )
     return rotation_matrix @ coords
