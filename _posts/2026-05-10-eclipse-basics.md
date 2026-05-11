@@ -25,6 +25,8 @@ Z).
 **Nb.** For demonstration purposes, the diagrams below are not to scale, and the
 observer has a much smaller Z value than would be realistic.
 
+### Inclination
+
 The inclination is measured in radians within the range $0 \leq i \leq \pi$,
 where $i = 0$ represents an orbit flat on the reference frame and $i = \pi$
 represents an orbit orthogonal to the reference frame.
@@ -33,6 +35,8 @@ represents an orbit orthogonal to the reference frame.
   <img src="/ellipses/assets/img/orth_side.png" width="700px" height="700px" frameborder="0">
   <figcaption>Figure 1: An orthographic projection of an elliptical orbit in three dimensions from the side, with labeled inclination $i$. In this figure, $i = \frac{\pi}{6}$ radians.</figcaption>
 </figure>
+
+### Line of nodes
 
 Consider below a second orthographic projection for the view of the elliptical
 orbit from the observer's perspective.
@@ -51,6 +55,8 @@ negative $x$.
   <img src="/ellipses/assets/img/orth_observer.png" width="700px" height="700px" frameborder="0">
   <figcaption>Figure 2: An orthographic projection of an elliptical orbit in three dimensions from the observer's perspective, with labeled inclination $i$.</figcaption>
 </figure>
+
+### 3D model
 
 To recap our coordinate system: we define the star at the origin, with
 ourselves, the observer, at large positive Z. We then observe the line of nodes,
@@ -74,14 +80,41 @@ geometry of elliptical orbits in three dimensions.
 ## Geometry of eclipses
 
 Consider a planet of radius $R_P$ and mass $M_P$ orbitting a star of radius
-$R_\*$ and mass $M_*$. Let's define the ratio of planet to star radius:
+$R_\*$ and mass $M_*$. Let's define the ratio of planet-to-star radius as:
 
 $$
 k = \frac{R_P}{R_*} \tag{1}
 $$
 
-Now we define the coordindate system from the observer's perspective. We place
-the origin at the star, with the X-Y planes on the celestial sphere and the +Z
-axis coming towards the observer.
+The distance between the star and the planet is given by:
 
-From an observer's perspective, a celestial body
+$$
+r = \frac{a(1 - e^2)}{1 + e \cos f'} \tag{2}
+$$
+
+where $e$ is the elliptical orbit's eccentricity and $f$ is the
+[true anomaly](ellipses/2026/05/10/ellipses-and-elliptical-orbits.html#true-anomaly),
+an implicit function of orbital eccentricity $e$ and period $P$.
+
+We can resolve this into Cartesian coordinate equations within our defined
+coordinate system.
+
+$$
+X = -r \cos (w + f) \tag{3}
+Y = -r \sin (w + f) \cos i \tag{4}
+Z = r \sin (w + f) \sin i \tag{5}
+$$
+
+Consider again the orthographic projection of the 3D model from the perspective
+of the observer.
+
+The projected distance on this plot is represented by:
+
+$$
+r_{sky} \equiv \sqrt{X^2 + Y^2} \tag{6}
+$$
+
+by Pythagorean theorem. If an eclipse occurs, it will do so at a local minimum
+of $r_{sky}$, as labeled below.
+
+# TODO add new labeled projection
