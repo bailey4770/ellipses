@@ -31,6 +31,8 @@ axis. The inclination is measured in radians within the range
 $0 \leq i \leq \pi$, where $i = 0$ represents an orbit flat on the reference
 frame and $i = \pi$ represents an orbit orthogonal to the reference frame.
 
+# TODO explore other ways of representing observer
+
 <figure>
   <img src="/ellipses/assets/img/orth_side.png" width="700px" height="700px" frameborder="0">
   <figcaption>Figure 1: An orthographic projection of an elliptical orbit in three dimensions from the side, with labeled inclination $i$. In this figure, $i = \frac{\pi}{6}$ radians.</figcaption>
@@ -111,6 +113,10 @@ $$
 Z = r \sin (w + f) \sin i \tag{5}
 $$
 
+where $w$ represents the **argument of periapsis**.
+
+# TODO labelled diagram with w
+
 Consider again the orthographic projection of the 3D model from the perspective
 of the observer.
 
@@ -152,25 +158,71 @@ orbits, and most importantly for non-grazing orbits. If an orbit is grazing,
 then a small error can mean the difference between an eclipse and no eclipse.
 
 The **impact parameter** $b$ is the sky-projected distance at the conjunction,
-in units of stellar radius. It ranges $0 \leq b$ where $b = 0$ describes where
-the planet's centre passes through the star's centre, $b = 1$ describes a
-grazing transit, where the planet's centre passes along the edge of the star,
+in units of stellar radius. It ranges $0 \leq b$, where $b = 0$ describes where
+the planet appears to the observer to pass through the star's centre; $b = 1$
+describes a grazing transit, where the planet passes along the edge of the star;
 and $b > 1$ represents no eclipse. It is a function of the inclination and
 eccentricity of the orbit, and we can derive the two expressions for it below:
 
 $$
-b_{tra} = \frac{a \cos i}{R_{\*}} (\frac{1 - e^2}{1 + e \sin w}) \tag{10}
+b_{tra} = \frac{a \cos i}{R_{*}} (\frac{1 - e^2}{1 + e \sin w}) \tag{10}
 $$
 
 $$
-b_{occ} = \frac{a \cos i}{R_{\*}} (\frac{1 - e^2}{1 - e \sin w}) \tag{11}
+b_{occ} = \frac{a \cos i}{R_{*}} (\frac{1 - e^2}{1 - e \sin w}) \tag{11}
 $$
 
 We can simplify this further. For the common case where the stellar radius is
-much smaller than the orbits semi-major axis $R_{\*} << a$, then the exoplanet's
+much smaller than the orbits semi-major axis $R_{*} << a$, then the exoplanet's
 path across the star can be approximated by a straight line between the two
 points:
 
 $$
-X = \pm R_{\*} \sqrt{1 - b^2} \tag{12}
+X = \pm R_{*} \sqrt{1 - b^2} \tag{12}
 $$
+
+## Probability of eclipse
+
+The astute reader may have noticed that in the examples given above, the
+observer cannot actually observe an eclipse. This is due to the large
+inclination of the exoplanet's orbit from the reference plane. As seen in Figure
+3, the orbital plane does not intersect the observer. To observe an eclipse, the
+inclination of the exoplanet's orbit must be small - the orbit must be close to
+edge-on.
+
+Consider the excellent figure below from the Winn 2010 paper.
+
+# TODO check if below image it stretched
+
+<figure>
+  <img src="/ellipses/assets/img/winn_eclipse_angle.png" width="700px" height="700px" frameborder="0">
+  <figcaption>Figure 4: A 3D image of the shadow band swept by the cone from an obiting exoplanet, next to a side orthgraaphic projection of that cone and the areas where grazing and full eclipses of that exoplanet can be seen (Source: Winn, 2010)</figcaption>
+</figure>
+
+The figure shows how an orbiting exoplanet has a shadow cone with angle $\Theta$
+which satisfies the conditon:
+
+$$
+\sin \Theta = \frac{R_{*} + R_p}{r} \tag{13}
+$$
+
+where $r$ is the actual (non-projected) 3D distance. This cone is called the
+**penumbra** and is shown by the thick lines on the right in figure 4 above.
+Observer's inside this cone will see a full eclipse, so the impact paramter for
+them will lie in the range $0 \leq b < 1$. The interior cone described by the
+slimmer lines is called the **antumbra** and satisfies the condition:
+
+$$
+\sin \Theta = \frac{R_{*} - R_p}{r} \tag{14}
+$$
+
+The penumbra sweeps out a shadow band on a celestial sphere around the star, as
+seen on the left of figure 4. Any observer must be located inside that shadow
+band in order to observe the eclipse.
+
+Other methods of detecting planets, such as the Doppler Method, can reveal an
+exoplanet's eccentricity $e$ and argument of periapsis $w$. This works, briefly
+explained, by taking advantage of the tiny orbit of the star around the system's
+centre of mass. This presents as a tiny wobble, where the star's light will be
+slightly blueshifted as the star moves towards the observer, and slightly
+redshifted as it moves away.
