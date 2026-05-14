@@ -22,20 +22,28 @@ ANGLE_LABEL_OFFSET = 0.2
 
 
 def draw_diagrams(
-    x_r: np.ndarray, y_r: np.ndarray, z_r: np.ndarray, a: float, c: float, i: float
+    x_r: np.ndarray,
+    y_r: np.ndarray,
+    z_r: np.ndarray,
+    a: float,
+    c: float,
+    i: float,
+    omega: float,
 ) -> None:
-    _get_3d_model(x_r, y_r, z_r, i)
+    _get_3d_model(x_r, y_r, z_r, i, omega)
     _get_orth_observer(x_r, y_r, a, c)
     _get_orth_side(y_r, z_r, i)
 
 
-def _get_3d_model(x_r: np.ndarray, y_r: np.ndarray, z_r: np.ndarray, i: float) -> None:
+def _get_3d_model(
+    x_r: np.ndarray, y_r: np.ndarray, z_r: np.ndarray, i: float, omega: float
+) -> None:
     fig = go.Figure()
     _ = fig.add_trace(go.Scatter3d(x=x_r, y=y_r, z=z_r, mode="lines"))
     fig = _add_sphere(fig, 0.0, "yellow")
     fig = _add_sphere(fig, OBSERVER_Z_OFFSET, OBSERVER_COLOR)
     fig = _add_sky_plane(fig, "blue")
-    fig = _add_orbital_plane(fig, i, "orange")
+    fig = _add_orbital_plane(fig, i, omega, "orange")
 
     _ = fig.update_layout(
         showlegend=False,
@@ -48,7 +56,7 @@ def _get_3d_model(x_r: np.ndarray, y_r: np.ndarray, z_r: np.ndarray, i: float) -
     )
 
     fig.write_html(Path("assets/html/3d_orbit.html"))
-    # fig.show()
+    fig.show()
 
 
 def _get_orth_observer(
@@ -83,7 +91,7 @@ def _get_orth_observer(
     )
 
     fig.write_image(Path("assets/img/orth_observer.png"))
-    # fig.show()
+    fig.show()
 
 
 def _add_line_of_nodes_labels(fig: go.Figure, a: float, c: float) -> go.Figure:
@@ -175,7 +183,7 @@ def _get_orth_side(
     )
 
     fig.write_image(Path("assets/img/orth_side.png"))
-    # fig.show()
+    fig.show()
 
 
 def _add_inclination_arc(
@@ -286,13 +294,13 @@ def _add_sky_plane(fig: go.Figure, color: str, plane_size: float = PLANE_SIZE):
 
 
 def _add_orbital_plane(
-    fig: go.Figure, i: float, color: str, plane_size: float = PLANE_SIZE
+    fig: go.Figure, i: float, omega: float, color: str, plane_size: float = PLANE_SIZE
 ):
     grid = np.linspace(-plane_size, plane_size, 10)
     xx, zz = np.meshgrid(grid, grid)  # XY plane, not XZ
     yy = np.zeros_like(xx)
     orb_coords = np.array([xx.ravel(), yy.ravel(), zz.ravel()])
-    rotated = rotate_ellipse(orb_coords, i)
+    rotated = rotate_ellipse(orb_coords, i, omega)
 
     _ = fig.add_trace(
         go.Surface(

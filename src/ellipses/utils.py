@@ -28,8 +28,27 @@ def calculate_eccentric_anomaly(M: np.ndarray, e: float) -> np.ndarray:
     return eccentric_anomaly
 
 
-def rotate_ellipse(coords: np.ndarray, i: float) -> np.ndarray:
-    rotation_matrix = np.array(
-        [[1, 0, 0], [0, np.cos(i), np.sin(i)], [0, np.sin(i), np.cos(i)]]
+def rotate_ellipse(coords: np.ndarray, i: float, omega: float = 0.0) -> np.ndarray:
+    i = -i
+    r_x = np.array(
+        [
+            [1, 0, 0],
+            [0, np.cos(i), -np.sin(i)],
+            [0, np.sin(i), np.cos(i)],
+        ]
     )
-    return rotation_matrix @ coords
+    r_y = np.array(
+        [
+            [np.cos(omega), 0, np.sin(omega)],
+            [0, 1, 0],
+            [-np.sin(omega), 0, np.cos(omega)],
+        ]
+    )
+    r_z = np.array(
+        [
+            [np.cos(i), -np.sin(i), 0],
+            [-np.sin(i), 0, np.cos(i)],
+            [0, 0, 1],
+        ]
+    )
+    return r_x @ r_y @ coords

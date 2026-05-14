@@ -12,7 +12,8 @@ from ellipses.eclipse_basics.diagrams import draw_diagrams
 def main():
     a = 1.5
     e = 0.3
-    i = np.pi / 6  # 0 - pi radians (0 - 180 degrees)
+    i = np.pi / 4  # 0 - pi radians (0 - 180 degrees)
+    omega = np.pi / 8
 
     c = calculate_focus_offset(a, e)
     b = calculate_semi_minor_axis(a, e)
@@ -22,9 +23,9 @@ def main():
     x -= c
 
     y = np.zeros_like(f)
-    x_r, y_r, z_r = rotate_ellipse(np.array([x, y, z]), i)
+    x_r, y_r, z_r = rotate_ellipse(np.array([x, y, z]), i, omega)
 
-    draw_diagrams(x_r, y_r, z_r, a, c, i)
+    draw_diagrams(x_r, y_r, z_r, a, c, i, omega)
 
 
 if __name__ == "__main__":
