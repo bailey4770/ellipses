@@ -13,8 +13,7 @@ need to add the third dimension.
 We are free to define our coordinate system however we want, so we do so to make
 our lives as easy as possible. Previously, the orbit was flat on the XY plane,
 but now we define the orbit (represented by the blue line) as flat on the XZ
-plane, or the reference frame, where $y = 0$ with inclination $i$. The value of
-the inclination represents how the orbit is tilted on the y axis.
+plane, or the reference frame, where $y = 0$ with inclination $i$.
 
 We also previously defined the origin as the centre of the ellipse, with the
 star offset on the x axis by $c$ but now we define the star (represented by the
@@ -27,9 +26,10 @@ observer has a much smaller Z value than would be realistic.
 
 ### Inclination
 
-The inclination is measured in radians within the range $0 \leq i \leq \pi$,
-where $i = 0$ represents an orbit flat on the reference frame and $i = \pi$
-represents an orbit orthogonal to the reference frame.
+The value of the inclination represents how much the orbit is tilted on the y
+axis. The inclination is measured in radians within the range
+$0 \leq i \leq \pi$, where $i = 0$ represents an orbit flat on the reference
+frame and $i = \pi$ represents an orbit orthogonal to the reference frame.
 
 <figure>
   <img src="/ellipses/assets/img/orth_side.png" width="700px" height="700px" frameborder="0">
@@ -101,12 +101,20 @@ coordinate system.
 
 $$
 X = -r \cos (w + f) \tag{3}
+$$
+
+$$
 Y = -r \sin (w + f) \cos i \tag{4}
+$$
+
+$$
 Z = r \sin (w + f) \sin i \tag{5}
 $$
 
 Consider again the orthographic projection of the 3D model from the perspective
 of the observer.
+
+# TODO add orthographic proj
 
 The projected distance on this plot is represented by:
 
@@ -114,7 +122,55 @@ $$
 r_{sky} \equiv \sqrt{X^2 + Y^2} \tag{6}
 $$
 
-by Pythagorean theorem. If an eclipse occurs, it will do so at a local minimum
-of $r_{sky}$, as labeled below.
+by Pythagorean theorem. We can substitute in equations 3 and 4 for $X$ and $Y$
+to get:
 
-# TODO add new labeled projection
+$$
+r_{sky} = \frac{a(1-e^2)}{1 + e \cos f} \sqrt{1 - \sin ^2 {(w + f)} \sin^2 {i}} \tag{7}
+$$
+
+If an eclipse occurs, it will do so at a local minimum of $r_{sky}$. Minimising
+this expression is long and difficult, but we can approximate by stating that
+eclipses are centred around conjunctions, which are defined by where $X=0$.
+Conjunctions can either be superior, with the planet in front (a transit); or
+inferior, with the planet behind (an occultation).
+
+We can find expressions for $f$ for both a transit:
+
+$$
+f_{tra} = + \frac{\pi}{2} - w \tag{8}
+$$
+
+an an occultation:
+
+$$
+f_{occ} = - \frac{\pi}{2} - w \tag{9}
+$$
+
+This approximation is normally valid except for extremely eccentric and close-in
+orbits, and most importantly for non-grazing orbits. If an orbit is grazing,
+then a small error can mean the difference between an eclipse and no eclipse.
+
+The **impact parameter** $b$ is the sky-projected distance at the conjunction,
+in units of stellar radius. It ranges $0 \leq b$ where $b = 0$ describes where
+the planet's centre passes through the star's centre, $b = 1$ describes a
+grazing transit, where the planet's centre passes along the edge of the star,
+and $b > 1$ represents no eclipse. It is a function of the inclination and
+eccentricity of the orbit, and we can derive the two expressions for it below:
+
+$$
+b_{tra} = \frac{a \cos i}{R_{\*}} (\frac{1 - e^2}{1 + e \sin w}) \tag{10}
+$$
+
+$$
+b_{occ} = \frac{a \cos i}{R_{\*}} (\frac{1 - e^2}{1 - e \sin w}) \tag{11}
+$$
+
+We can simplify this further. For the common case where the stellar radius is
+much smaller than the orbits semi-major axis $R_{\*} << a$, then the exoplanet's
+path across the star can be approximated by a straight line between the two
+points:
+
+$$
+X = \pm R_{\*} \sqrt{1 - b^2} \tag{12}
+$$
