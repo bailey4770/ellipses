@@ -108,7 +108,7 @@ def _get_orth_side(
     _ = fig.add_trace(go.Scatter(x=z_r, y=y_r, mode="lines"))
     fig = _add_star_circle(fig, 0, 0)
     fig = _add_observer_2d(fig)
-    fig = _add_inclination_arc(fig, 0, 0, i)
+    fig = _add_angle_arc(fig, i, "i")
 
     _ = fig.update_layout(
         width=square_plot_length,
@@ -387,6 +387,7 @@ def _add_observer_2d(fig: go.Figure) -> go.Figure:
             y=[0],
             mode="text",
             text=["To distant<br>observer"],
+            textposition="middle center",
             textfont={"size": TEXT_SIZE},
         )
     )
@@ -394,33 +395,32 @@ def _add_observer_2d(fig: go.Figure) -> go.Figure:
     return fig
 
 
-def _add_inclination_arc(
+def _add_angle_arc(
     fig: go.Figure,
-    x_pos: float,
-    y_pos: float,
-    i: float,
+    angle: float,
+    label: str,
     arc_radius: float = ANGLE_ARC_RADIUS,
     text_size: int = TEXT_SIZE,
     angle_label_offset: float = APSE_LABEL_OFFSET,
 ) -> go.Figure:
-    # arc from 0 (reference line) to i (orbit angle)
-    theta = np.linspace(0, i, 100)
+    theta = np.linspace(0, angle, 100)
+
     _ = fig.add_trace(
         go.Scatter(
-            x=x_pos + arc_radius * np.cos(theta),
-            y=y_pos + arc_radius * np.sin(theta),
+            x=arc_radius * np.cos(theta),
+            y=arc_radius * np.sin(theta),
             mode="lines",
             line=dict(color="black", width=1),
         )
     )
     # label at midpoint of arc
-    mid = i / 2
+    mid = angle / 2
     _ = fig.add_trace(
         go.Scatter(
-            x=[x_pos + (arc_radius - angle_label_offset) * np.cos(mid)],
-            y=[y_pos + (arc_radius - angle_label_offset) * np.sin(mid)],
+            x=[(arc_radius - angle_label_offset) * np.cos(mid)],
+            y=[(arc_radius - angle_label_offset) * np.sin(mid)],
             mode="text",
-            text=["i"],
+            text=[label],
             textfont=dict(size=text_size),
         )
     )
