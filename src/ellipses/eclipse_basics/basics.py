@@ -24,10 +24,10 @@ def main():
     x -= c
 
     y = np.zeros_like(f)
-    x_r, y_r, z_r = rotate_ellipse_periapsis(np.array([x, y, z]), omega)
-    x_r, y_r, z_r = rotate_ellipse_inclination(np.array([x_r, y_r, z_r]), i)
+    rotated = rotate_ellipse_periapsis(np.array([x, y, z]), omega)
+    x_r, y_r, z_r = rotate_ellipse_inclination(rotated, i)
 
-    draw_diagrams(x_r, y_r, z_r, a, c, i)
+    draw_diagrams(x_r, y_r, z_r, a, c, i, omega)
 
 
 if __name__ == "__main__":

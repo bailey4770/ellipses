@@ -2,7 +2,7 @@ import numpy as np
 import plotly.graph_objects as go
 from pathlib import Path
 
-from ellipses.utils import rotate_ellipse_inclination
+from ellipses.utils import rotate_ellipse_inclination, rotate_ellipse_periapsis
 
 AXES_RANGE = [-3.5, 3.5]
 OBSERVER_Z_OFFSET = 2.5
@@ -13,6 +13,7 @@ SQUARE_PLOT_LENGTH = 700
 STAR_LABEL_Y_OFFSET = -0.1
 OBJECT_SIZE = 0.3
 TEXT_SIZE = 24
+SEMI_MAJOR_AXIS_LABEL_OFFSET = 0.1
 APSE_LABEL_OFFSET = 0.3
 APSE_LABEL_Y = 2
 ARROW_SIZE = 2.5
@@ -28,9 +29,10 @@ def draw_diagrams(
     a: float,
     c: float,
     i: float,
+    omega: float,
 ) -> None:
     _get_3d_model(x_r, y_r, z_r, i)
-    _get_orth_observer(x_r, y_r, a, c)
+    _get_orth_observer(x_r, y_r, a, c, i, omega)
     _get_orth_side(y_r, z_r, i)
 
 
@@ -53,7 +55,7 @@ def _get_3d_model(x_r: np.ndarray, y_r: np.ndarray, z_r: np.ndarray, i: float) -
     )
 
     fig.write_html(Path("assets/html/3d_orbit.html"))
-    fig.show()
+    # fig.show()
 
 
 def _get_orth_observer(
@@ -61,20 +63,23 @@ def _get_orth_observer(
     y_r: np.ndarray,
     a: float,
     c: float,
+    i: float,
+    omega: float,
     square_plot_length: int = SQUARE_PLOT_LENGTH,
 ):
     # from observer's perspective
     fig = go.Figure()
     _ = fig.add_trace(go.Scatter(x=x_r, y=y_r, mode="lines"))
     fig = _add_circle(fig, 0, 0, "yellow")
-    fig = _add_line_of_nodes_labels(fig, a, c)
+    fig = _add_semi_major_axis(fig, a, c, i, omega)
+    fig = _add_line_of_nodes_labels(fig, x_r, y_r)
 
     _ = fig.update_layout(
         width=square_plot_length,
         height=square_plot_length,
         showlegend=False,
         xaxis=dict(
-            range=AXES_RANGE[::-1],
+            range=AXES_RANGE,
             dtick=1,
             title="x",
         ),
@@ -88,57 +93,7 @@ def _get_orth_observer(
     )
 
     fig.write_image(Path("assets/img/orth_observer.png"))
-    fig.show()
-
-
-def _add_line_of_nodes_labels(fig: go.Figure, a: float, c: float) -> go.Figure:
-    ascending_node_x = -a - c
-    descending_node_x = a - c
-
-    _ = fig.add_annotation(
-        x=ascending_node_x,
-        y=0,
-        ax=-a - APSE_LABEL_OFFSET,
-        ay=-APSE_LABEL_Y,
-        axref="x",
-        ayref="y",
-        showarrow=True,
-        arrowhead=ARROW_HEAD,
-        arrowsize=ARROW_SIZE,
-    )
-    _ = fig.add_trace(
-        go.Scatter(
-            x=[-a - APSE_LABEL_OFFSET],
-            y=[-APSE_LABEL_Y],
-            mode="text",
-            text=["Ascending Node"],
-            textposition="bottom center",
-            textfont={"size": TEXT_SIZE},
-        )
-    )
-
-    _ = fig.add_annotation(
-        x=descending_node_x,
-        y=0,
-        ax=a + APSE_LABEL_OFFSET,
-        ay=APSE_LABEL_Y,
-        axref="x",
-        ayref="y",
-        showarrow=True,
-        arrowhead=ARROW_HEAD,
-        arrowsize=ARROW_SIZE,
-    )
-    _ = fig.add_trace(
-        go.Scatter(
-            x=[a + APSE_LABEL_OFFSET],
-            y=[APSE_LABEL_Y],
-            mode="text",
-            text=["Descending node"],
-            textposition="top center",
-            textfont={"size": TEXT_SIZE},
-        )
-    )
-    return fig
+    # fig.show()
 
 
 def _get_orth_side(
@@ -166,7 +121,7 @@ def _get_orth_side(
         height=square_plot_length,
         showlegend=False,
         xaxis=dict(
-            range=AXES_RANGE[::-1],
+            range=AXES_RANGE,
             dtick=1,
             title="z",
         ),
@@ -180,7 +135,121 @@ def _get_orth_side(
     )
 
     fig.write_image(Path("assets/img/orth_side.png"))
-    fig.show()
+    # fig.show()
+
+
+def _add_semi_major_axis(
+    fig: go.Figure,
+    a: float,
+    c: float,
+    i: float,
+    omega: float,
+) -> go.Figure:
+    start = np.array([-a - c, 0, 0])
+    end = np.array([a - c, 0, 0])
+
+    x_start_r, y_start_r, _ = rotate_ellipse_inclination(
+        rotate_ellipse_periapsis(start, omega), i
+    )
+    x_end_r, y_end_r, _ = rotate_ellipse_inclination(
+        rotate_ellipse_periapsis(end, omega), i
+    )
+
+    _ = fig.add_annotation(
+        x=x_start_r,
+        y=y_start_r,
+        ax=x_end_r,
+        ay=y_end_r,
+        axref="x",
+        ayref="y",
+        showarrow=True,
+        arrowhead=ARROW_HEAD,
+        arrowsize=ARROW_SIZE,
+    )
+    _ = fig.add_annotation(
+        x=x_end_r,
+        y=y_end_r,
+        ax=x_start_r,
+        ay=y_start_r,
+        axref="x",
+        ayref="y",
+        showarrow=True,
+        arrowhead=ARROW_HEAD,
+        arrowsize=ARROW_SIZE,
+    )
+    _ = fig.add_trace(
+        go.Scatter(
+            x=[(x_end_r + x_start_r) / 2],
+            y=[(y_end_r + y_start_r) / 2 + SEMI_MAJOR_AXIS_LABEL_OFFSET],
+            mode="text",
+            text=["a"],
+            textposition="top center",
+            textfont={"size": TEXT_SIZE},
+        )
+    )
+
+    return fig
+
+
+def _add_line_of_nodes_labels(
+    fig: go.Figure,
+    x_r: np.ndarray,
+    y_r: np.ndarray,
+) -> go.Figure:
+    zero_crossings = np.where(np.diff(np.sign(y_r)))[0]
+    nodes_x = x_r[zero_crossings]
+
+    _ = fig.add_annotation(
+        x=nodes_x[0],
+        y=0,
+        ax=nodes_x[0] + APSE_LABEL_OFFSET,
+        ay=-APSE_LABEL_Y,
+        axref="x",
+        ayref="y",
+        showarrow=True,
+        arrowhead=ARROW_HEAD,
+        arrowsize=ARROW_SIZE,
+    )
+    _ = fig.add_trace(
+        go.Scatter(
+            x=[nodes_x[0] + APSE_LABEL_OFFSET],
+            y=[-APSE_LABEL_Y],
+            mode="text",
+            text=["Descending Node"],
+            textposition="bottom center",
+            textfont={"size": TEXT_SIZE},
+        )
+    )
+
+    _ = fig.add_annotation(
+        x=nodes_x[1],
+        y=0,
+        ax=nodes_x[1] - APSE_LABEL_OFFSET,
+        ay=-APSE_LABEL_Y,
+        axref="x",
+        ayref="y",
+        showarrow=True,
+        arrowhead=ARROW_HEAD,
+        arrowsize=ARROW_SIZE,
+    )
+    _ = fig.add_trace(
+        go.Scatter(
+            x=[nodes_x[1] - APSE_LABEL_OFFSET],
+            y=[-APSE_LABEL_Y],
+            mode="text",
+            text=["Ascending node"],
+            textposition="bottom center",
+            textfont={"size": TEXT_SIZE},
+        )
+    )
+
+    _ = fig.add_trace(
+        go.Scatter(
+            x=nodes_x, y=[0, 0], mode="lines", line={"color": "green", "dash": "dash"}
+        )
+    )
+
+    return fig
 
 
 def _add_inclination_arc(
