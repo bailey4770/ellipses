@@ -111,7 +111,8 @@ geometry of elliptical orbits in three dimensions.
 ## Geometry of eclipses
 
 Consider a planet of radius $R_P$ and mass $M_P$ orbitting a star of radius
-$R_\*$ and mass $M_*$. Let's define the ratio of planet-to-star radius as:
+$R_\*$ and mass $M_*$. Let's define the ratio of planet-to-star radius for
+future reference as:
 
 $$
 k = \frac{R_P}{R_*} \tag{1}
@@ -131,42 +132,33 @@ We can resolve this into Cartesian coordinate equations within our defined
 coordinate system.
 
 $$
-X = -r \cos (w + f) \tag{3}
+X = -r \cos (\omega + f) \tag{3}
 $$
 
 $$
-Y = -r \sin (w + f) \cos i \tag{4}
+Y = -r \sin (\omega + f) \cos i \tag{4}
 $$
 
 $$
-Z = r \sin (w + f) \sin i \tag{5}
+Z = r \sin (\omega + f) \sin i \tag{5}
 $$
 
-where $w$ represents the **argument of periapsis**.
-
-# TODO labelled diagram with w
-
-Consider again the orthographic projection of the 3D model from the perspective
-of the observer.
-
-# TODO add orthographic proj
-
-The projected distance on this plot is represented by:
+We can use the Pythagorean theorem to derive the projected distance on the sky
+plane as:
 
 $$
 r_{sky} \equiv \sqrt{X^2 + Y^2} \tag{6}
 $$
 
-by Pythagorean theorem. We can substitute in equations 3 and 4 for $X$ and $Y$
-to get:
+We can substitute in equations 3 and 4 for $X$ and $Y$ to get:
 
 $$
-r_{sky} = \frac{a(1-e^2)}{1 + e \cos f} \sqrt{1 - \sin ^2 {(w + f)} \sin^2 {i}} \tag{7}
+r_{sky} = \frac{a(1-e^2)}{1 + e \cos f} \sqrt{1 - \sin ^2 {(\omega + f)} \sin^2 {i}} \tag{7}
 $$
 
 If an eclipse occurs, it will do so at a local minimum of $r_{sky}$. Minimising
 this expression is long and difficult, but we can approximate by stating that
-eclipses are centred around conjunctions, which are defined by where $X=0$.
+eclipses are centred around conjunctions, which are defined by $X=0$.
 Conjunctions can either be superior, with the planet in front (a transit); or
 inferior, with the planet behind (an occultation).
 
@@ -194,15 +186,15 @@ and $b > 1$ represents no eclipse. It is a function of the inclination and
 eccentricity of the orbit, and we can derive the two expressions for it below:
 
 $$
-b_{tra} = \frac{a \cos i}{R_{*}} (\frac{1 - e^2}{1 + e \sin w}) \tag{10}
+b_{tra} = \frac{a \cos i}{R_{*}} (\frac{1 - e^2}{1 + e \sin \omega}) \tag{10}
 $$
 
 $$
-b_{occ} = \frac{a \cos i}{R_{*}} (\frac{1 - e^2}{1 - e \sin w}) \tag{11}
+b_{occ} = \frac{a \cos i}{R_{*}} (\frac{1 - e^2}{1 - e \sin \omega}) \tag{11}
 $$
 
 We can simplify this further. For the common case where the stellar radius is
-much smaller than the orbits semi-major axis $R_{*} << a$, then the exoplanet's
+much smaller than the orbits semi-major axis, $R_{*} << a$, then the exoplanet's
 path across the star can be approximated by a straight line between the two
 points:
 
