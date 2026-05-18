@@ -14,7 +14,7 @@ components.
 
 <figure>
   <img src="/ellipses/assets/img/labelled_ellipse.png" alt="Labelled ellipse" />
-  <figcaption>Figure 1: A labelled ellipse showing the semi-major axis, semi-minor axis, and distance from centre to focus.</figcaption>
+  <figcaption>Figure 1: A labelled ellipse showing the semi-major axis, semi-minor axis, and distance from centre to focus. (Source: Own diagram)</figcaption>
 </figure>
 
 - Semi-major axis, $a$
@@ -59,7 +59,7 @@ or when the star is the Sun, it is called the **aphelion**.
 
 <figure>
   <img src="/ellipses/assets/img/labelled_static_planet.png" alt="Static planet on an elliptical orbit" />
-  <figcaption>Figure 2: A planet on an elliptical orbit, with periapsis and apoapsis labelled.</figcaption>
+  <figcaption>Figure 2: A planet on an elliptical orbit, with periapsis and apoapsis labelled. (Source: Own diagram)</figcaption>
 </figure>
 
 ## Anomalies and Kepler's Second Law
@@ -76,7 +76,7 @@ Imagine a circle with radius $a$ centred at the origin.
 
 <figure>
   <img src="/ellipses/assets/img/labelled_anomalies.png" alt="Ellipse with hypothetical circle, with eccentric, mean, and true anomaly labelled" />
-  <figcaption>Figure 3: An ellipse with its hypothetical circle, showing the eccentric anomaly E, mean anomaly M, and true anomaly ν.</figcaption>
+  <figcaption>Figure 3: An ellipse with its hypothetical circle, showing the eccentric anomaly E, mean anomaly M, and true anomaly ν. (Source: Own diagram)</figcaption>
 </figure>
 
 ### Mean Anomaly
@@ -136,7 +136,7 @@ of $e$ and $M$. Here, $e = 0.7$ and $M=3$:
 
 <figure>
   <img src="/ellipses/assets/img/f_E.png" alt="f(E) graph" />
-  <figcaption>Figure 4: Graph of f(E) for e = 0.7 and M = 3, showing the root to be found by Newton's method.</figcaption>
+  <figcaption>Figure 4: Graph of f(E) for e = 0.7 and M = 3, showing the root to be found by Newton's method. (Source: Own diagram)</figcaption>
 </figure>
 
 Then we take an initial guess. For us, a reasonable first guess is $E_0 = M$.
@@ -181,7 +181,7 @@ animation, showing Kepler's Second Law in action.
 
 <figure>
   <img src="/ellipses/assets/img/elliptical_orbit.gif" alt="Elliptical orbit animation" />
-  <figcaption>Figure 5: Animation of a planet on an elliptical orbit, demonstrating Kepler's Second Law.</figcaption>
+  <figcaption>Figure 5: Animation of a planet on an elliptical orbit, demonstrating Kepler's Second Law. (Source: Own diagram)</figcaption>
 </figure>
 
 The object has an elliptical orbit around the star, moving quickly near the

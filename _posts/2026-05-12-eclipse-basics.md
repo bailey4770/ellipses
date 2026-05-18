@@ -10,6 +10,11 @@ In the [previous post](/ellipses/2026/05/10/ellipses-and-elliptical-orbits.html)
 we explored elliptical orbits in two dimensions. But to understand eclipses, we
 need to add the third dimension.
 
+<figure>
+  <img src="/ellipses/assets/img/possible_rotations_3d.png" width="700px" height="700px" frameborder="0">
+  <figcaption>Figure 1: A figure showing the three different possible angles of rotation. (Source: www.wikiwand.com)</figcaption>
+</figure>
+
 We are free to define our coordinate system however we want, so we do so to make
 our lives as easy as possible. Previously, the orbit was flat on the XY plane,
 but now we define the orbit (represented by the blue line) as flat on the XZ
@@ -35,7 +40,7 @@ frame and $i = \pi$ represents an orbit orthogonal to the reference frame.
 
 <figure>
   <img src="/ellipses/assets/img/orth_side.png" width="700px" height="700px" frameborder="0">
-  <figcaption>Figure 1: An orthographic projection of an elliptical orbit in three dimensions from the side, with labeled inclination $i$. In this figure, $i = \frac{\pi}{6}$ radians.</figcaption>
+  <figcaption>Figure 2: An orthographic projection of an elliptical orbit in three dimensions from the side, with labeled inclination $i$. In this figure, $i = \frac{\pi}{6}$ radians. (Source: Own diagram)</figcaption>
 </figure>
 
 ### Line of nodes
@@ -55,7 +60,7 @@ negative $x$.
 
 <figure>
   <img src="/ellipses/assets/img/orth_observer.png" width="700px" height="700px" frameborder="0">
-  <figcaption>Figure 2: An orthographic projection of an elliptical orbit in three dimensions from the observer's perspective, with labeled inclination $i$.</figcaption>
+  <figcaption>Figure 3: An orthographic projection of an elliptical orbit in three dimensions from the observer's perspective, with labeled inclination $i$. (Source: Own diagram)</figcaption>
 </figure>
 
 ### 3D model
@@ -76,7 +81,7 @@ geometry of elliptical orbits in three dimensions.
 
 <figure>
   <iframe src="/ellipses/assets/html/3d_orbit.html" width="100%" height="600px" frameborder="0"></iframe>
-  <figcaption>Figure 3: A 3D visualisation of an elliptical orbit, showing the sky plane and orbital plane.</figcaption>
+  <figcaption>Figure 4: A 3D visualisation of an elliptical orbit, showing the sky plane and orbital plane. (Source: Own diagram)</figcaption>
 </figure>
 
 ## Geometry of eclipses
@@ -192,11 +197,9 @@ edge-on.
 
 Consider the excellent figure below from the Winn 2010 paper.
 
-# TODO check if below image it stretched
-
 <figure>
   <img src="/ellipses/assets/img/winn_eclipse_angle.png" width="700px" height="700px" frameborder="0">
-  <figcaption>Figure 4: A 3D image of the shadow band swept by the cone from an obiting exoplanet, next to a side orthgraaphic projection of that cone and the areas where grazing and full eclipses of that exoplanet can be seen (Source: Winn, 2010)</figcaption>
+  <figcaption>Figure 5: A 3D image of the shadow band swept by the cone from an obiting exoplanet, next to a side orthgraaphic projection of that cone and the areas where grazing and full eclipses of that exoplanet can be seen (Source: Winn, 2010)</figcaption>
 </figure>
 
 The figure shows how an orbiting exoplanet has a shadow cone with angle $\Theta$
