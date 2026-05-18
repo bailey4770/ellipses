@@ -2,7 +2,7 @@ import numpy as np
 import plotly.graph_objects as go
 from pathlib import Path
 
-from ellipses.utils import rotate_ellipse
+from ellipses.utils import rotate_ellipse_inclination
 
 AXES_RANGE = [-3.5, 3.5]
 OBSERVER_Z_OFFSET = 2.5
@@ -28,22 +28,19 @@ def draw_diagrams(
     a: float,
     c: float,
     i: float,
-    omega: float,
 ) -> None:
-    _get_3d_model(x_r, y_r, z_r, i, omega)
+    _get_3d_model(x_r, y_r, z_r, i)
     _get_orth_observer(x_r, y_r, a, c)
     _get_orth_side(y_r, z_r, i)
 
 
-def _get_3d_model(
-    x_r: np.ndarray, y_r: np.ndarray, z_r: np.ndarray, i: float, omega: float
-) -> None:
+def _get_3d_model(x_r: np.ndarray, y_r: np.ndarray, z_r: np.ndarray, i: float) -> None:
     fig = go.Figure()
     _ = fig.add_trace(go.Scatter3d(x=x_r, y=y_r, z=z_r, mode="lines"))
     fig = _add_sphere(fig, 0.0, "yellow")
     fig = _add_sphere(fig, OBSERVER_Z_OFFSET, OBSERVER_COLOR)
     fig = _add_sky_plane(fig, "blue")
-    fig = _add_orbital_plane(fig, i, omega, "orange")
+    fig = _add_orbital_plane(fig, i, "orange")
 
     _ = fig.update_layout(
         showlegend=False,
@@ -254,10 +251,9 @@ def _add_sphere(
     fig: go.Figure, z_offset: float, color: str, object_size: float = OBJECT_SIZE
 ) -> go.Figure:
     u, v = np.mgrid[0 : 2 * np.pi : 20j, 0 : np.pi : 10j]
-    r = object_size
-    x_s = r * np.cos(u) * np.sin(v)
-    y_s = r * np.sin(u) * np.sin(v)
-    z_s = r * np.cos(v)
+    x_s = object_size * np.cos(u) * np.sin(v)
+    y_s = object_size * np.sin(u) * np.sin(v)
+    z_s = object_size * np.cos(v)
 
     _ = fig.add_trace(
         go.Surface(
@@ -294,13 +290,13 @@ def _add_sky_plane(fig: go.Figure, color: str, plane_size: float = PLANE_SIZE):
 
 
 def _add_orbital_plane(
-    fig: go.Figure, i: float, omega: float, color: str, plane_size: float = PLANE_SIZE
+    fig: go.Figure, i: float, color: str, plane_size: float = PLANE_SIZE
 ):
     grid = np.linspace(-plane_size, plane_size, 10)
     xx, zz = np.meshgrid(grid, grid)  # XY plane, not XZ
     yy = np.zeros_like(xx)
     orb_coords = np.array([xx.ravel(), yy.ravel(), zz.ravel()])
-    rotated = rotate_ellipse(orb_coords, i, omega)
+    rotated = rotate_ellipse_inclination(orb_coords, i)
 
     _ = fig.add_trace(
         go.Surface(

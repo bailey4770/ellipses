@@ -4,7 +4,8 @@ from ellipses.utils import (
     calculate_coordinates,
     calculate_focus_offset,
     calculate_semi_minor_axis,
-    rotate_ellipse,
+    rotate_ellipse_inclination,
+    rotate_ellipse_periapsis,
 )
 from ellipses.eclipse_basics.diagrams import draw_diagrams
 
@@ -23,9 +24,10 @@ def main():
     x -= c
 
     y = np.zeros_like(f)
-    x_r, y_r, z_r = rotate_ellipse(np.array([x, y, z]), i, omega)
+    x_r, y_r, z_r = rotate_ellipse_periapsis(np.array([x, y, z]), omega)
+    x_r, y_r, z_r = rotate_ellipse_inclination(np.array([x_r, y_r, z_r]), i)
 
-    draw_diagrams(x_r, y_r, z_r, a, c, i, omega)
+    draw_diagrams(x_r, y_r, z_r, a, c, i)
 
 
 if __name__ == "__main__":
