@@ -10,12 +10,11 @@ In the [previous post](/ellipses/2026/05/10/ellipses-and-elliptical-orbits.html)
 we explored elliptical orbits in two dimensions. But to understand eclipses, we
 need to add the third dimension.
 
-By doing so, we also need to recognise that the ellipse could be rotated in each
-dimension.
+By doing so, we also need to be aware of how the ellipse could be rotated:
 
-- A rotation about the Z-axis affects the **longitude of the ascending node**,
-  or the angle $\Omega$ in the diagram below.
-- A rotation about the Y-axis affects the **argument of periapsis**, or the
+- A rotation in the plane of reference affects the **longitude of the ascending
+  node**, or the angle $\Omega$ in the diagram below.
+- A rotation in the orbital plane affects the **argument of periapsis**, or the
   angle $\omega$ in the diagram below.
 - A rotation about the X-axis affects the **inclination**, or the angle $i$ in
   the diagram below.
@@ -27,7 +26,7 @@ dimension.
 
 We are free to define the coordinate system to make our lives as easy as
 possible. Previously, the orbit was flat on the XY-plane, but now we define the
-orbit as flat on the XZ-plane, or the reference frame.
+orbit as originally flat on the XZ-plane, or the reference frame.
 
 We also previously defined the origin as the centre of the ellipse, with the
 star offset on the X-axis by $c$, but now we define the star at the origin with

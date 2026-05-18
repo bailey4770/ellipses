@@ -332,7 +332,7 @@ def _add_line_of_nodes_labels(
             x=[nodes_x[0] + APSE_LABEL_OFFSET],
             y=[-APSE_LABEL_Y],
             mode="text",
-            text=["Descending Node"],
+            text=["Descending node"],
             textposition="bottom center",
             textfont={"size": TEXT_SIZE},
         )
