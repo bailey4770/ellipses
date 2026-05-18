@@ -11,7 +11,7 @@ ORTH_ZOOM = 0.5
 PLANE_SIZE = 3.0
 SQUARE_PLOT_LENGTH = 700
 STAR_LABEL_Y_OFFSET = -0.1
-OBJECT_SIZE = 0.3
+STAR_SIZE = 0.3
 TEXT_SIZE = 24
 SEMI_MAJOR_AXIS_LABEL_OFFSET = 0.1
 APSE_LABEL_OFFSET = 0.3
@@ -20,6 +20,7 @@ ARROW_SIZE = 2.5
 ARROW_HEAD = 2
 ANGLE_ARC_RADIUS = 1.2
 ANGLE_LABEL_OFFSET = 0.2
+OBSEVER_LABEL_X_OFFSET = 0.2
 
 
 def draw_diagrams(
@@ -39,8 +40,9 @@ def draw_diagrams(
 def _get_3d_model(x_r: np.ndarray, y_r: np.ndarray, z_r: np.ndarray, i: float) -> None:
     fig = go.Figure()
     _ = fig.add_trace(go.Scatter3d(x=x_r, y=y_r, z=z_r, mode="lines"))
-    fig = _add_sphere(fig, 0.0, "yellow")
-    fig = _add_sphere(fig, OBSERVER_Z_OFFSET, OBSERVER_COLOR)
+    fig = _add_sun_sphere(fig)
+    # fig = _add_sphere(fig, OBSERVER_Z_OFFSET, OBSERVER_COLOR)
+    fig = _add_observer_3d(fig)
     fig = _add_sky_plane(fig, "blue")
     fig = _add_orbital_plane(fig, i, "orange")
 
@@ -70,7 +72,7 @@ def _get_orth_observer(
     # from observer's perspective
     fig = go.Figure()
     _ = fig.add_trace(go.Scatter(x=x_r, y=y_r, mode="lines"))
-    fig = _add_circle(fig, 0, 0, "yellow")
+    fig = _add_star_circle(fig, 0, 0)
     fig = _add_semi_major_axis(fig, a, c, i, omega)
     fig = _add_line_of_nodes_labels(fig, x_r, y_r)
 
@@ -104,16 +106,8 @@ def _get_orth_side(
 ):
     fig = go.Figure()
     _ = fig.add_trace(go.Scatter(x=z_r, y=y_r, mode="lines"))
-    _ = fig.add_trace(
-        go.Scatter(
-            x=[-4, 4],
-            y=[0, 0],
-            mode="lines",
-            line=dict(color="gray"),
-        )
-    )
-    fig = _add_circle(fig, 0, 0, "yellow")
-    fig = _add_circle(fig, OBSERVER_Z_OFFSET, 0, "black")
+    fig = _add_star_circle(fig, 0, 0)
+    fig = _add_observer_2d(fig)
     fig = _add_inclination_arc(fig, 0, 0, i)
 
     _ = fig.update_layout(
@@ -136,6 +130,129 @@ def _get_orth_side(
 
     fig.write_image(Path("assets/img/orth_side.png"))
     # fig.show()
+
+
+def _add_sun_sphere(fig: go.Figure, star_size: float = STAR_SIZE) -> go.Figure:
+    u, v = np.mgrid[0 : 2 * np.pi : 20j, 0 : np.pi : 10j]
+    x_s = star_size * np.cos(u) * np.sin(v)
+    y_s = star_size * np.sin(u) * np.sin(v)
+    z_s = star_size * np.cos(v)
+
+    _ = fig.add_trace(
+        go.Surface(
+            x=x_s,
+            y=y_s,
+            z=z_s,
+            surfacecolor=np.ones_like(x_s),
+            colorscale=[[0, "yellow"], [1, "yellow"]],  # pyright: ignore
+            showscale=False,
+        )
+    )
+
+    return fig
+
+
+def _add_observer_3d(fig: go.Figure) -> go.Figure:
+    _ = fig.add_trace(
+        go.Cone(
+            x=[0],
+            y=[0],
+            z=[OBSERVER_Z_OFFSET],
+            u=[0],
+            v=[0],
+            w=[OBSERVER_Z_OFFSET + 1],
+            sizemode="absolute",
+            sizeref=0.3,
+            colorscale=[[0, "black"], [1, "black"]],  # pyright: ignore
+            showscale=False,
+        )
+    )
+    _ = fig.add_trace(
+        go.Scatter3d(
+            x=[0, 0],
+            y=[0, 0],
+            z=[0, OBSERVER_Z_OFFSET],
+            mode="lines",
+            line={"color": "black"},
+        )
+    )
+    _ = fig.add_trace(
+        go.Scatter3d(
+            x=[0],
+            y=[0],
+            z=[OBSERVER_Z_OFFSET + 0.1],
+            mode="text",
+            text="To distant observer",
+        )
+    )
+
+    return fig
+
+
+def _add_sky_plane(fig: go.Figure, color: str, plane_size: float = PLANE_SIZE):
+    grid = np.linspace(-plane_size, plane_size, 10)
+    xx, yy = np.meshgrid(grid, grid)
+
+    fig.add_trace(
+        go.Surface(
+            x=xx,
+            y=yy,
+            z=np.zeros_like(xx),
+            opacity=0.2,
+            surfacecolor=np.ones_like(xx),
+            colorscale=[[0, color], [1, color]],  # pyright: ignore
+            showscale=False,
+            name="sky plane",
+        )
+    )
+
+    return fig
+
+
+def _add_orbital_plane(
+    fig: go.Figure, i: float, color: str, plane_size: float = PLANE_SIZE
+):
+    grid = np.linspace(-plane_size, plane_size, 10)
+    xx, zz = np.meshgrid(grid, grid)  # XY plane, not XZ
+    yy = np.zeros_like(xx)
+    orb_coords = np.array([xx.ravel(), yy.ravel(), zz.ravel()])
+    rotated = rotate_ellipse_inclination(orb_coords, i)
+
+    _ = fig.add_trace(
+        go.Surface(
+            x=rotated[0].reshape(10, 10),
+            y=rotated[1].reshape(10, 10),
+            z=rotated[2].reshape(10, 10),
+            opacity=0.2,
+            surfacecolor=np.ones_like(xx),
+            colorscale=[[0, color], [1, color]],  # pyright: ignore
+            showscale=False,
+        )
+    )
+
+    return fig
+
+
+def _add_star_circle(
+    fig: go.Figure,
+    x_pos: float,
+    y_pos: float,
+    radius: float = STAR_SIZE,
+) -> go.Figure:
+    theta = np.linspace(0, 2 * np.pi, 100)
+
+    _ = fig.add_trace(
+        go.Scatter(
+            x=x_pos + radius * np.cos(theta),
+            y=y_pos + radius * np.sin(theta),
+            mode="lines",
+            fill="toself",
+            fillcolor="yellow",
+            line={"color": "yellow"},
+        )
+    )
+
+    return fig
 
 
 def _add_semi_major_axis(
@@ -252,6 +369,31 @@ def _add_line_of_nodes_labels(
     return fig
 
 
+def _add_observer_2d(fig: go.Figure) -> go.Figure:
+    _ = fig.add_annotation(
+        x=OBSERVER_Z_OFFSET,
+        y=0,
+        ax=0,
+        ay=0,
+        axref="x",
+        ayref="y",
+        showarrow=True,
+        arrowhead=ARROW_HEAD,
+        arrowsize=ARROW_SIZE,
+    )
+    _ = fig.add_trace(
+        go.Scatter(
+            x=[OBSERVER_Z_OFFSET + OBSEVER_LABEL_X_OFFSET],
+            y=[0],
+            mode="text",
+            text=["To distant<br>observer"],
+            textfont={"size": TEXT_SIZE},
+        )
+    )
+
+    return fig
+
+
 def _add_inclination_arc(
     fig: go.Figure,
     x_pos: float,
@@ -282,101 +424,4 @@ def _add_inclination_arc(
             textfont=dict(size=text_size),
         )
     )
-    return fig
-
-
-def _add_circle(
-    fig: go.Figure,
-    x_pos: float,
-    y_pos: float,
-    color: str,
-    label: str = "",
-    radius: float = OBJECT_SIZE,
-) -> go.Figure:
-    theta = np.linspace(0, 2 * np.pi, 100)
-    _ = fig.add_trace(
-        go.Scatter(
-            x=x_pos + radius * np.cos(theta),
-            y=y_pos + radius * np.sin(theta),
-            mode="lines",
-            fill="toself",
-            fillcolor=color,
-            line=dict(color=color),
-        )
-    )
-    _ = fig.add_trace(
-        go.Scatter(
-            x=[x_pos],
-            y=[y_pos + radius + STAR_LABEL_Y_OFFSET],
-            mode="text",
-            text=[label],
-            textfont={"size": TEXT_SIZE},
-        )
-    )
-    return fig
-
-
-def _add_sphere(
-    fig: go.Figure, z_offset: float, color: str, object_size: float = OBJECT_SIZE
-) -> go.Figure:
-    u, v = np.mgrid[0 : 2 * np.pi : 20j, 0 : np.pi : 10j]
-    x_s = object_size * np.cos(u) * np.sin(v)
-    y_s = object_size * np.sin(u) * np.sin(v)
-    z_s = object_size * np.cos(v)
-
-    _ = fig.add_trace(
-        go.Surface(
-            x=x_s,
-            y=y_s,
-            z=z_s + z_offset,
-            surfacecolor=np.ones_like(x_s),
-            colorscale=[[0, color], [1, color]],  # pyright: ignore
-            showscale=False,
-        )
-    )
-
-    return fig
-
-
-def _add_sky_plane(fig: go.Figure, color: str, plane_size: float = PLANE_SIZE):
-    grid = np.linspace(-plane_size, plane_size, 10)
-    xx, yy = np.meshgrid(grid, grid)
-
-    fig.add_trace(
-        go.Surface(
-            x=xx,
-            y=yy,
-            z=np.zeros_like(xx),
-            opacity=0.2,
-            surfacecolor=np.ones_like(xx),
-            colorscale=[[0, color], [1, color]],  # pyright: ignore
-            showscale=False,
-            name="sky plane",
-        )
-    )
-
-    return fig
-
-
-def _add_orbital_plane(
-    fig: go.Figure, i: float, color: str, plane_size: float = PLANE_SIZE
-):
-    grid = np.linspace(-plane_size, plane_size, 10)
-    xx, zz = np.meshgrid(grid, grid)  # XY plane, not XZ
-    yy = np.zeros_like(xx)
-    orb_coords = np.array([xx.ravel(), yy.ravel(), zz.ravel()])
-    rotated = rotate_ellipse_inclination(orb_coords, i)
-
-    _ = fig.add_trace(
-        go.Surface(
-            x=rotated[0].reshape(10, 10),
-            y=rotated[1].reshape(10, 10),
-            z=rotated[2].reshape(10, 10),
-            opacity=0.2,
-            surfacecolor=np.ones_like(xx),
-            colorscale=[[0, color], [1, color]],  # pyright: ignore
-            showscale=False,
-        )
-    )
-
     return fig
