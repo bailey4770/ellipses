@@ -124,7 +124,7 @@ r = \frac{a(1 - e^2)}{1 + e \cos f'} \tag{2}
 $$
 
 where $e$ is the elliptical orbit's eccentricity and $f$ is the
-[true anomaly](ellipses/2026/05/10/ellipses-and-elliptical-orbits.html#true-anomaly),
+[true anomaly](/ellipses/2026/05/10/ellipses-and-elliptical-orbits.html#true-anomaly),
 an implicit function of orbital eccentricity $e$ and period $P$.
 
 We can resolve this into Cartesian coordinate equations within our defined
