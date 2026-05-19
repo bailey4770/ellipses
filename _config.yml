@@ -79,7 +79,11 @@ plugins:
 
 author:
   name: "Bailey Stringer"
-  bio: "TODO write bio"
+  bio:
+    "I am an economics graduate with a deep interest in computing, astronomy,
+    and maths. But I'm also a visual learner, and I find graphs and diagrams
+    help me understand a concept much better. Therefore, I made this blog to
+    help understand ellipses and eclipses better."
 
 footer:
   links:
