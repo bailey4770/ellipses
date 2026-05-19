@@ -9,7 +9,7 @@ toc: true
 ## Geometry of eclipses
 
 Consider a planet of radius $R_P$ and mass $M_P$ orbitting a star of radius
-$R_{*}$ and mass $M_{*}$. Let's define the ratio of planet-to-star radius $k$
+$R_{\*}$ and mass $M_{\*}$. Let's define the ratio of planet-to-star radius $k$
 as:
 
 $$
@@ -122,7 +122,7 @@ Consider below the excellent figure from the Winn 2010 paper:
 
 <figure>
   <img src="/ellipses/assets/img/winn_eclipse_angle.png" width="700px" height="700px" frameborder="0">
-  <figcaption>Figure 1: _Left_: A 3D image of the shadow band swept by the cone from an obiting exoplanet on to the celestial sphere centred on the star. _Right_: A side orthgraphic projection of that cone and the areas where grazing and full eclipses of that exoplanet can be seen (Source: Winn, 2010)</figcaption>
+  <figcaption>Figure 1: Left: A 3D image of the shadow band swept by the cone from an obiting exoplanet on to the celestial sphere centred on the star. Right: A side orthgraphic projection of that cone and the areas where grazing and full eclipses of that exoplanet can be seen (Source: Winn, 2010)</figcaption>
 </figure>
 
 Figure 1 shows how an orbiting exoplanet has a shadow cone with angle $\Theta$
@@ -190,5 +190,5 @@ transit probability in terms of solar radius and astronomical units. For
 example, a planet orbiting a Sun-like star at a distance of 1AU has a 0.5%
 chance of being observable via eclipse from a randomly placed observer. Thirdly,
 the probability increases in $R_{☉}$ and decreases in $a$. Therefore, the most
-likely planet's to be detected a exoplanets with extremely tight orbits around
+likely planet's to be detected are exoplanets with extremely tight orbits around
 very large stars.
